@@ -1,2 +1,3 @@
 # FINANCIAL-LITERAC
-CEP PROJECT
+Website for financial literacy to teach people money management
+
