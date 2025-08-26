@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Financial Calculator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-cyan-50 via-teal-100 to-pink-100 min-h-screen flex flex-col">
+  <header class="bg-gradient-to-r from-pink-600 via-pink-400 to-teal-500 text-white shadow-lg">
+    <nav class="container mx-auto flex items-center justify-between py-4 px-6">
+      <h1 class="text-3xl font-bold tracking-wide font-sans drop-shadow">Financial Calculator</h1>
+      <ul class="flex space-x-6 text-lg font-medium">
+      </ul>
+    </nav>
+  </header>
+
+  <main class="flex-1 flex items-center justify-center">
+    <section class="w-full max-w-md bg-white bg-opacity-95 rounded-3xl shadow-2xl p-8 mt-10 border-teal-300 border">
+      <h2 class="text-2xl md:text-3xl text-center font-bold mb-2 text-teal-700">Track Your Finances</h2>
+      <p class="text-center mb-6 text-pink-600 font-medium">Plan ahead and see if you follow the 50-30-20 rule!</p>
+      <form id="financial-form" class="space-y-3">
+        <div>
+          <label for="income" class="block text-teal-800 font-semibold mb-1">Monthly Income/Allowance:</label>
+          <input type="number" id="income" required class="w-full px-4 py-2 border border-teal-300 rounded-lg bg-cyan-50 focus:outline-none focus:ring-2 focus:ring-pink-400"/>
+        </div>
+        <div>
+          <label for="rent" class="block text-teal-800 font-semibold mb-1">Rent:</label>
+          <input type="number" id="rent" required class="w-full px-4 py-2 border border-teal-300 rounded-lg bg-teal-50 focus:outline-none focus:ring-2 focus:ring-pink-400"/>
+        </div>
+        <div>
+          <label for="food" class="block text-teal-800 font-semibold mb-1">Food:</label>
+          <input type="number" id="food" required class="w-full px-4 py-2 border border-teal-300 rounded-lg bg-pink-50 focus:outline-none focus:ring-2 focus:ring-pink-400"/>
+        </div>
+        <div>
+          <label for="travel" class="block text-teal-800 font-semibold mb-1">Travel:</label>
+          <input type="number" id="travel" required class="w-full px-4 py-2 border border-teal-300 rounded-lg bg-yellow-50 focus:outline-none focus:ring-2 focus:ring-pink-400"/>
+        </div>
+        <div>
+          <label for="educational-expenses" class="block text-teal-800 font-semibold mb-1">Educational Expenses:</label>
+          <input type="number" id="educational-expenses" required class="w-full px-4 py-2 border border-teal-300 rounded-lg bg-purple-50 focus:outline-none focus:ring-2 focus:ring-pink-400"/>
+        </div>
+        <div>
+          <label for="entertainment" class="block text-teal-800 font-semibold mb-1">Entertainment (recharge, wifi, games, shopping):</label>
+          <input type="number" id="entertainment" required class="w-full px-4 py-2 border border-teal-300 rounded-lg bg-blue-50 focus:outline-none focus:ring-2 focus:ring-pink-400"/>
+        </div>
+        <div>
+          <label for="savings" class="block text-teal-800 font-semibold mb-1">Savings:</label>
+          <input type="number" id="savings" required class="w-full px-4 py-2 border border-teal-300 rounded-lg bg-green-50 focus:outline-none focus:ring-2 focus:ring-pink-400"/>
+        </div>
+        <div>
+          <label for="investments" class="block text-teal-800 font-semibold mb-1">Investments:</label>
+          <input type="number" id="investments" required class="w-full px-4 py-2 border border-teal-300 rounded-lg bg-orange-50 focus:outline-none focus:ring-2 focus:ring-pink-400"/>
+        </div>
+        <button id="calculate-btn" type="submit" class="w-full py-3 mt-3 bg-gradient-to-r from-pink-500 via-teal-500 to-cyan-600 font-bold text-white rounded-xl shadow hover:scale-105 hover:from-pink-600 transition transform duration-150">Calculate</button>
+      </form>
+      <div id="result" class="mt-8 text-lg p-4 rounded-xl font-bold text-center bg-teal-100 text-teal-900 shadow-inner"></div>
+    </section>
+  </main>
+
+  <footer class="bg-gradient-to-r from-pink-600 via-pink-400 to-teal-500 text-white text-center py-4 mt-8">
+    &copy; 2025 Financial Literacy | All rights reserved.
+    <a href="/solution.html" class="underline hover:text-pink-300 ml-4">Budgeting Advice</a>
+  </footer>
+
+  <script>
+    document.getElementById('financial-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const income = parseFloat(document.getElementById('income').value);
+      const rent = parseFloat(document.getElementById('rent').value);
+      const food = parseFloat(document.getElementById('food').value);
+      const travel = parseFloat(document.getElementById('travel').value);
+      const educationalExpenses = parseFloat(document.getElementById('educational-expenses').value);
+      const entertainment = parseFloat(document.getElementById('entertainment').value);
+      const savings = parseFloat(document.getElementById('savings').value);
+      const investments = parseFloat(document.getElementById('investments').value);
+
+      const totalExpenses = rent + food + travel + educationalExpenses + entertainment;
+      const remainingAmount = income - totalExpenses - savings - investments;
+
+      let result = '';
+      result += `Total Expenses: <span class="text-pink-700">₹${totalExpenses.toFixed(2)}</span><br>`;
+      result += `Remaining Amount: <span class="text-teal-700">₹${remainingAmount.toFixed(2)}</span><br>`;
+
+      const necessaryExpensesPercentage = ((rent + food + educationalExpenses) / income) * 100;
+      const discretionaryExpensesPercentage = ((travel + entertainment) / income) * 100;
+      const savingsPercentage = ((savings + investments) / income) * 100;
+
+      if (necessaryExpensesPercentage <= 50 && discretionaryExpensesPercentage <= 30 && savingsPercentage >= 20) {
+        result += '<span class="text-green-600">You are following the 50-30-20 rule! 🎉</span><br>';
+      } else {
+        result += '<span class="text-red-700">You are not following the 50-30-20 rule.</span><br>';
+        result += `Necessary Expenses: <span class="text-blue-700">${necessaryExpensesPercentage.toFixed(2)}%</span> (should be ≤ 50%)<br>`;
+        result += `Discretionary Expenses: <span class="text-purple-700">${discretionaryExpensesPercentage.toFixed(2)}%</span> (should be ≤ 30%)<br>`;
+        result += `Savings: <span class="text-orange-700">${savingsPercentage.toFixed(2)}%</span> (should be ≥ 20%)<br>`;
+      }
+
+      document.getElementById('result').innerHTML = result;
+    });
+  </script>
+</body>
+</html>
